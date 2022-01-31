@@ -1,0 +1,55 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Prefabs/Board.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Prefabs/OrangeTile.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Prefabs/MilkTile.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Prefabs/AppleTile.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Prefabs/Cell.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Prefabs/CoconutTile.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Prefabs/BreadTile.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Prefabs/GUI.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scripts/Core/Game.cs" type="Script" id=9]
+[ext_resource path="res://Sprites/background.jpg" type="Texture" id=10]
+[ext_resource path="res://Prefabs/MessagePanel.tscn" type="PackedScene" id=11]
+
+[node name="Game" type="Node"]
+script = ExtResource( 9 )
+
+[node name="TextureRect" type="TextureRect" parent="."]
+modulate = Color( 0.321569, 0.321569, 0.282353, 1 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource( 10 )
+expand = true
+flip_h = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Board" parent="." instance=ExtResource( 1 )]
+position = Vector2( 32, 256 )
+width = 8
+height = 8
+offset = 64.0
+cell = ExtResource( 5 )
+tileVariants = [ ExtResource( 4 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 3 ), ExtResource( 2 ) ]
+
+[node name="GameOverTimer" type="Timer" parent="."]
+wait_time = 60.0
+one_shot = true
+autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GUI" parent="CanvasLayer" instance=ExtResource( 8 )]
+
+[node name="MessagePanel" parent="CanvasLayer" instance=ExtResource( 11 )]
+modulate = Color( 1, 1, 1, 0.913725 )
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 0.0
+margin_bottom = 0.0
+
+[connection signal="timeout" from="GameOverTimer" to="." method="OnGameOver"]
+[connection signal="hide" from="CanvasLayer/MessagePanel" to="." method="OnMessagePanelClose"]

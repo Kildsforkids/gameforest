@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts/Core/GridBoard/Tile.cs" type="Script" id=1]
+
+[node name="Tile" type="Node2D"]
+scale = Vector2( 1e-05, 1e-05 )
+script = ExtResource( 1 )
+type = null
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 0.25, 0.25 )
+z_index = 1
+
+[node name="Tween" type="Tween" parent="."]
+
+[connection signal="tween_completed" from="Tween" to="." method="OnTweenCompleted"]
